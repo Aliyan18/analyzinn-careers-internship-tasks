@@ -1,0 +1,33 @@
+form{
+
+    position:absolute;
+top:-100vh;
+right:50vw;
+transition:.7s ease-in-out;
+background-color:black;
+color:white;
+border-radius:7px;
+z-index: 1;
+padding:10px;
+width:60vh;
+display: flex;
+flex:1 1 1;
+height:auto;
+}
+.movve{
+    transform:translate(10vw,120vh);
+}
+ul {
+    border: 2px solid black;
+    list-style-type: none;
+    border: 1px black;
+  }
+  .pets{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .card{
+    border:3px solid black;
+    border-radius: 20%;
+}
