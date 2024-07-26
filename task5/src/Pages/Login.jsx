@@ -1,7 +1,9 @@
 import React from 'react';
-import './signup.css'; // Your custom CSS
+import '../components/styleSheets/signup.css'
+ // Your custom CSS
 import {useNavigate} from 'react-router-dom'
 import Form from '../components/Form';
+
 export default function Login() {
   const navigate=useNavigate();
 
@@ -28,12 +30,12 @@ export default function Login() {
   }
 function handleSignup(){
  //console.log('here');
-   navigate('/Signup')
+ navigate('/Signup')
 }
   return (<>   <div className="outer">
   <h3>Login</h3>
- <Form handleSubmit={handleSubmit} text={'Signup'} handleBtn={handleSignup}></Form>
- <button type="button" onClick={()=>handleSignup} className="btn btn-secondary">Signup</button>
+ <Form handleSubmit={handleSubmit} text={'Signup'} handleBtn={ ()=>{navigate('/Signup')}}></Form>
+ <button type="button" onClick={handleSignup} className="btn btn-secondary">Signup</button>
 
  </div>
  </>)

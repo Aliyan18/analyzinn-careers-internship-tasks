@@ -1,4 +1,4 @@
-import './landing.css'
+import '../components/styleSheets/landing.css'
 import {v4 as uuid} from 'uuid';
 import { useState } from 'react'
 import Buttons from './Buttons';

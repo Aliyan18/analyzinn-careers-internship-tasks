@@ -1,5 +1,6 @@
 import React from 'react';
-import './signup.css'; // Your custom CSS
+import '../components/styleSheets/signup.css'
+ // Your custom CSS
 import {useNavigate} from 'react-router-dom'
 import Form from '../components/Form';
 export default function Snp() {
