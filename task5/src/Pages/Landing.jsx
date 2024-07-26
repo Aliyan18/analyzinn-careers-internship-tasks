@@ -1,9 +1,9 @@
-import './landing.css'
+import '../components/styleSheets/landing.css'
 import { useState } from 'react'
 import {v4 as uuid} from 'uuid';
 import Card from '../components/Card.jsx'
 
- function Landing(){
+ export default function Landing(){
  const [pets,setPets]=useState([]);
  const [currentPet, setCurrentPet] = useState({ id: null, name: '', price: '', type: '', breed: '' });
     const [isEditing, setIsEditing] = useState(false);
@@ -130,5 +130,5 @@ return(
 </>
 )
 }
- export default  Landing;
+ //export default  Landing;
 // handleEdit={()=>handleEdit(item.id)
