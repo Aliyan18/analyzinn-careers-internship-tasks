@@ -1,9 +1,10 @@
 import '../components/styleSheets/landing.css'
 import {v4 as uuid} from 'uuid';
-import { useState } from 'react'
+import { useState,useContext } from 'react'
 import Buttons from './Buttons';
 
 function Card({inx,item,handleDelete,handleEdit,setPets}){
+
 
 const classes=[
   "card text-white bg-success mb-3" ,

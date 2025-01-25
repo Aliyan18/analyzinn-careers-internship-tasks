@@ -3,7 +3,10 @@ import { useState } from 'react'
 import {v4 as uuid} from 'uuid';
 import Card from '../components/Card.jsx'
 
- export default function Landing(){
+ import ShoppingCart from '../components/ShoppingCart/ShoppingCart.jsx';
+export default function Landing(){
+
+
  const [pets,setPets]=useState([]);
  const [currentPet, setCurrentPet] = useState({ id: null, name: '', price: '', type: '', breed: '' });
     const [isEditing, setIsEditing] = useState(false);
@@ -128,7 +131,7 @@ function handleBack(){
 }
 
 return(
-<>
+<><div style={{width:'70%'}}>
 <div className="pets">
    { pets.length===0? 'Press button to add Pets: ':( pets.map((item,inx)=>{return(
  
@@ -169,12 +172,13 @@ return(
   </div>
   <div className="form-text" id="basic-addon4">Example help text goes outside the input group.</div>
 </div>
-<button type="button" onClick={handleBack}>Back</button>
+<button style={{margin:'auto', width:'40%'}}>Submit</button>
 
-<button>Submit</button>
-</form>
+<button style={{width:'40%',margin:'auto'}} type="button" onClick={handleBack}>Back</button>
 
+</form></div>
 
+<ShoppingCart></ShoppingCart>
 </>
 )
 }

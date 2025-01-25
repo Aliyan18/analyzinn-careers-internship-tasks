@@ -7,9 +7,10 @@ const path=require('path');
 const authName = path.join(__dirname,'..', 'auth.json');
 const secret_key = 'aliyan\'s_key';
 
-router.post('/auth', (req, res) => {
-    // Assuming req.body contains username and password sent from the client
-    console.log(1);
+router.post('/', (req, res) => {
+  const jwt = require('jsonwebtoken');  
+  // Assuming req.body contains username and password sent from the client
+    console.log(1);   let token=null;
     // Read the contents of auth.json file
     fs.readFile(authName, 'utf-8', (err, data) => {
       if (err) {
@@ -19,7 +20,6 @@ router.post('/auth', (req, res) => {
       console.log(2);
       try {
         const authData = JSON.parse(data);
-        const token = jwt.sign({ email: req.body.username }, secret_key);
   
         let isAuthenticated = false;
   
@@ -30,12 +30,14 @@ router.post('/auth', (req, res) => {
           console.log(obj.password);
   
           if (req.body.username === obj.username && req.body.password === obj.password) {
+            token = jwt.sign({ username: req.body.username,role:obj.role }, secret_key);
             isAuthenticated = true;
             return;
           }
         });
   
         if (isAuthenticated) {
+        
           res.send({ token });
         } else {
           res.status(401).send('Authentication failed.');

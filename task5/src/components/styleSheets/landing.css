@@ -1,9 +1,10 @@
 form{
 
     position:absolute;
-top:-100vh;
+top:-300vh;
 right:50vw;
 transition:.7s ease-in-out;
+
 background-color:black;
 color:white;
 border-radius:7px;
@@ -11,6 +12,7 @@ z-index: 1;
 padding:10px;
 width:60vh;
 display: flex;
+flex-direction: column;
 flex:1 1 1;
 height:auto;
 }
@@ -18,7 +20,9 @@ height:auto;
 background-color:silver;
 }
 .movve{
-    transform:translate(10vw,120vh);
+  display:flex;
+
+    transform:translate(10vw,315vh);
 }
 ul {
     border: 2px solid black;

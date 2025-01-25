@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useContext } from 'react';
+import { CartContext } from "../Pages/CartContext"; 
 
 export default function Buttons({item,handleEdit,handleDelete, editStatus={editStatus}}){
 const[editing,setEditing]=useState(editStatus.setEdit);
-    return(
+const {addToCart,setHidden}=useContext(CartContext);
+   return(
 <>
         {editStatus.edit?<button type='button' 
         onClick={()=>{handleEdit(item);
@@ -14,9 +17,13 @@ const[editing,setEditing]=useState(editStatus.setEdit);
           setEditing(true);
         {editStatus.setEdit(true)};
         }}>Edit</button>}
-
 <button id={item.id} type='button' onClick={()=>handleDelete(item.id)}>delete</button>
-  
+<button onClick=
+              {()=>{addToCart(item);
+              setHidden(()=> false)}}>
+                 Add to Cart 
+</button>
+
   </>
     )
 }
