@@ -3,12 +3,15 @@ import { useState } from 'react'
 import {v4 as uuid} from 'uuid';
 import Card from '../components/Card.jsx'
 
- export default function Landing(){
+ import ShoppingCart from '../components/ShoppingCart/ShoppingCart.jsx';
+export default function Landing(){
+
+
  const [pets,setPets]=useState([]);
  const [currentPet, setCurrentPet] = useState({ id: null, name: '', price: '', type: '', breed: '' });
     const [isEditing, setIsEditing] = useState(false);
 
-function handleSubmit(e){
+async function handleSubmit(e){
     e.preventDefault();
 let name,price,breed,type;
 console.log("handleSubmit"+isEditing);
@@ -17,14 +20,19 @@ name = document.querySelector('#name').value;
 breed = document.querySelector('#breed').value;
 type = document.querySelector('#type').value;
 price = document.querySelector('#price').value;
+let id=uuid();
+
+let newPet = { id,name, breed, type, price };
+
     if(!isEditing){
     
     console.log(document.querySelector('#breed').value);
     console.log(document.querySelector('#type').value);
     console.log(document.querySelector('#price').value);
- let id=uuid();
- const newPet = { id,name, breed, type, price };
-setPets([...pets,newPet]);
+//-->
+
+    //let newPet = { id,name, breed, type, price };
+    setPets([...pets,newPet]);
 
     }
     else{
@@ -33,33 +41,75 @@ console.log("reached")
     // Update pets state
     console.log(currentPet);
     let id=currentPet.id;
-    const newPet = { id,name, breed, type, price };
+     newPet = { id,name, breed, type, price };
 
-    setPets(pets.map(item => item.id !== currentPet.id ? item : newPet));
+    setPets(pets.map(item => item.id !== currentPet.id ? item : currentPet));
 
       console.log(pets);
       setIsEditing(false);
     // Clear form inputs
  //console.log(document.querySelector('#name').value);
     }
+    try {
+      const response = await fetch('http://localhost:3000/pets/add', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newPet) // Send pet data in the body as JSON
+      });
+
+      if (response.ok) {
+          const result = await response.json();
+          alert('Pet added successfully: ' + JSON.stringify(result.pet));
+      } else {
+          alert('Error adding pet');
+      }
+  } catch (error) {
+      console.error('Error:', error);
+  }
     document.querySelector('#name').value = '';
 document.querySelector('#breed').value = '';
 document.querySelector('#type').value = '';
 document.querySelector('#price').value = '';
 }
 
-function handleEdit(pet){
-  document.querySelector('form').classList.add('movve');
+async function handleEdit(pet) {
+  try {
+    // Assuming setCurrentPet sets the pet you are editing
+    setCurrentPet(pet);
 
-   document.querySelector('#name').value=pet.name;
-      document.querySelector('#breed').value=pet.breed;
-      document.querySelector('#type').value=pet.type;
-      document.querySelector('#price').value=pet.price;
-  setCurrentPet(pet);
-  setIsEditing(true);
-  console.log(isEditing);
+    // Using the pet directly instead of currentPet
+    const id = pet.id;
+    const newPet = {  name: pet.name, breed: pet.breed, type: pet.type, price: pet.price };
+console.log(newPet);
+    // Async function to handle PUT request using fetch
+    const response = await fetch(`http://localhost:3000/pets/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newPet),
+    });
 
+    // Check for a successful response
+    if (response.ok) {
+      const result = await response.json();
+      console.log('Pet edited successfully:', result);
+
+      // Update the pet list with the edited pet
+      setPets(pets.map(item => item.id !== pet.id ? item : newPet));
+    } else {
+      // Handle any errors that might occur during fetch
+      console.log('Failed to edit pet:', response.statusText);
+    }
+
+    console.log('Editing pet:', pet);
+  } catch (e) {
+    console.log('Error:', e);
+  }
 }
+
 function handleClick(e){
     e.preventDefault();
 
@@ -79,13 +129,14 @@ function handleBack(){
   document.querySelector('#type').value = '';
   document.querySelector('#price').value = '';
 }
+
 return(
-<>
+<><div style={{width:'70%'}}>
 <div className="pets">
    { pets.length===0? 'Press button to add Pets: ':( pets.map((item,inx)=>{return(
  
-    <Card key={item.id} inx={inx} item={item} handleDelete={() => handleDelete(item.id)
-    }handleEdit={handleEdit}/>)
+    <Card key={item.id} inx={inx} pets={pets} setPets={setPets} item={item} handleDelete={() => handleDelete(item.id)
+    } handleEdit={handleEdit}/> )
      }))}
 </div>
 <button id="addPet" type='button' onClick={handleClick}>Add Pet</button>
@@ -121,12 +172,13 @@ return(
   </div>
   <div className="form-text" id="basic-addon4">Example help text goes outside the input group.</div>
 </div>
-<button type="button" onClick={handleBack}>Back</button>
+<button style={{margin:'auto', width:'40%'}}>Submit</button>
 
-<button>Submit</button>
-</form>
+<button style={{width:'40%',margin:'auto'}} type="button" onClick={handleBack}>Back</button>
 
+</form></div>
 
+<ShoppingCart></ShoppingCart>
 </>
 )
 }

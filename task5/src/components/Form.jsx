@@ -4,10 +4,10 @@ function Form({handleSubmit,text,handleBtn}){
 
 
 return(<>
-  <div className="form-group">
+  <div className="form-group" >
     <label htmlFor="exampleInputEmail1">Email address</label>
     <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
-    <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+  <div style={{margin:'25px'}}></div>
   </div>
   <div className="form-group">
     <label htmlFor="exampleInputPassword1">Password</label>
@@ -18,8 +18,8 @@ return(<>
     <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
   </div>
   {/* <button type="button" onClick={()=>handleBtn} className="btn btn-secondary">{text}</button> */}
-
   <button type="button" onClick={()=>(handleSubmit(document.querySelector('#exampleInputEmail1').value,document.querySelector('#exampleInputPassword1').value))} className="btn btn-primary">Submit</button>
+  
   </>
   )}
   export default Form;
